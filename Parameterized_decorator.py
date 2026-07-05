@@ -12,7 +12,12 @@ def logger(path):
                 result = old_function(*args, **kwargs)
                 data_time = datetime.now()
                 data_func = old_function.__name__
-                data_arg = ", ".join(map(str, [path, *args, *kwargs.values()])) if [*args, *kwargs] else None
+                args_list = []
+                for arg in args:
+                    args_list.append(str(arg))
+                for key, value in kwargs.items():
+                    args_list.append(f"{key}={value}")
+                data_arg = ", ".join(args_list) if args_list else None
                 data_result = result
                 f.write(f"{str(data_time)}, {data_func}, {data_arg}, {data_result} \n")
             return result
